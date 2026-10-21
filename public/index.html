@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<!--
+  =============================================================================
+  ARVORECER — Diagnóstico de leitura, escrita e uso da informação
+  -----------------------------------------------------------------------------
+  Estrutura da página (de cima para baixo):
+    1. Barra de navegação ............ marca à esquerda, links no centro, tema à direita
+    2. Hero (#inicio) ................ apresentação + contador de avaliações
+    3. Cartões de teste (#modos) ...... escolher: Teste de Interpretação (N1–N4) OU Teste Fundamental (N0)
+    4. Como funciona (#como) ......... passos do teste
+    5. Competências (#competencias) .. botão que exibe a TABELA ÚNICA N0–N4 com os PESOS (de /api/weights)
+    6. Preparação (#comecar) ......... formulário de cada modo (abas)
+    7. Teste de Interpretação (#quiz) . todas as questões + barra de ações fixa embaixo
+    8. Teste Fundamental (#guided) .... um item por vez + painel lateral do professor
+    9. Resultado (#result) ........... score ponderado, competências, observações
+  Scripts (nesta ordem):
+    assets/questions.js  banco do Teste de Interpretação (gerado)
+    assets/mediated.js   itens do Teste Fundamental (gerado)
+    assets/app.js        toda a lógica da página
+  =============================================================================
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arvorecer — diagnóstico de alfabetismo</title>
+  <meta name="description" content="Arvorecer: diagnóstico de alfabetização e alfabetismo funcional, com Teste Fundamental (N0, com professor) e Teste de Interpretação (N1 a N4)." />
+
+  <!-- Aplica o tema salvo ANTES de pintar a página (evita "piscar" claro/escuro).
+       Fica em arquivo externo (e não inline) para funcionar com a política de segurança (CSP) da Vercel. -->
+  <script src="assets/theme-init.js"></script>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Cpath d=%27M20 26c-6 0-10-3-11-9 6 0 10 3 11 9z%27 fill=%27%2375b88f%27/%3E%3Cpath d=%27M20 21c0-7 4-12 11-13 0 7-4 12-11 13z%27 fill=%27%231f7a4d%27/%3E%3Cpath d=%27M20 37V21%27 stroke=%27%231f7a4d%27 stroke-width=%273%27/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/questions.js" defer></script>
+  <script src="assets/mediated.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+
+  <!-- ===================== 1. NAVEGAÇÃO ===================== -->
+  <nav class="topbar" aria-label="Navegação principal">
+    <a class="brand" href="#inicio" data-scroll="inicio" aria-label="Arvorecer — início">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 37V21" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M20 26c-6 0-10-3-11-9 6 0 10 3 11 9z" fill="currentColor" opacity=".55"/>
+        <path d="M20 21c0-7 4-12 11-13 0 7-4 12-11 13z" fill="currentColor"/>
+      </svg>
+      <span>Arvorecer</span>
+    </a>
+
+    <div class="topbar-links">
+      <a href="#inicio" data-scroll="inicio">Início</a>
+      <a href="#como" data-scroll="como">Como funciona</a>
+      <a href="#competencias" data-scroll="competencias">Competências</a>
+    </div>
+
+    <div class="topbar-end">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false"
+              aria-label="Alternar entre modo claro e modo escuro">🌙 Escuro</button>
+      <button class="btn btn-accent btn-sm" type="button" data-scroll="comecar">Começar</button>
+    </div>
+  </nav>
+
+  <!-- Barra de progresso fixa (aparece só durante um teste) -->
+  <div class="progress-wrap" id="progressWrap" aria-live="polite">
+    <div class="progress-inner">
+      <strong id="progressText">0/30 respondidas</strong>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </div>
+
+  <!-- ===================== 2. HERO ===================== -->
+  <header class="hero container" id="inicio">
+    <div class="hero-copy">
+      <span class="eyebrow">Diagnóstico de leitura, escrita e uso da informação</span>
+      <h1>Arvorecer</h1>
+      <p class="lead">
+        Da primeira letra à leitura crítica. Um único lugar para <strong>descobrir em que ponto</strong>
+        cada pessoa está — com um <strong>teste de interpretação</strong> (N1 a N4) para quem já lê e um
+        <strong>teste fundamental</strong> (N0), <strong>conduzido por professor</strong>, para quem está começando.
+      </p>
+      <div class="counter" id="publicCounter">
+        <span class="counter-label">Avaliações já registradas</span>
+        <strong id="heroResponseCountValue">—</strong>
+      </div>
+    </div>
+
+    <!-- Ilustração: árvore que cresce (puro SVG, segue as cores do tema) -->
+    <div class="hero-art" aria-hidden="true">
+      <img src="assets/img/Apenaslogo.png" alt="">
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== 3. CARTÕES DE MODO ===================== -->
+    <section class="container modes" id="modos" aria-label="Escolha o modo de avaliação">
+      <article class="mode-card mode-auto">
+        <div class="mode-icon" aria-hidden="true">📖</div>
+        <h2>Teste de Interpretação - N1 à N4 </h2>
+        <p>Para quem já lê. A pessoa responde sozinha a 30 ou 50 questões sobre textos, tabelas, regras, porcentagens
+           e leitura crítica de informações do dia a dia.</p>
+        <ul class="mode-list">
+          <li>30 min ou menos, no celular ou computador</li>
+          <li>Score calculado com <strong>peso por competência</strong></li>
+        </ul>
+        <button class="btn btn-primary" type="button" data-mode="autonomo">Fazer o teste de interpretação →</button>
+      </article>
+
+      <article class="mode-card mode-teacher">
+        <div class="mode-icon" aria-hidden="true">🧑‍🏫</div>
+        <h2>Teste Fundamental - N0</h2>
+        <p>Para quem está começando. O professor acompanha o aluno com letras, figuras, sílabas e frases:
+           “que letra é esta?”, “com que letra começa?”, “monte a frase”.</p>
+        <ul class="mode-list">
+          <li>34 itens, um por vez, em tela grande</li>
+          <li>Painel do professor com dicas e registro oral</li>
+        </ul>
+        <button class="btn btn-accent" type="button" data-mode="mediado">Iniciar o teste fundamental →</button>
+      </article>
+    </section>
+
+    <!-- ===================== 4. COMO FUNCIONA ===================== -->
+    <section class="container section" id="como">
+      <h2 class="section-title">Como funciona</h2>
+      <ol class="steps">
+        <li><span class="step-n">1</span><div><strong>Escolha o modo</strong><p>Interpretação (N1–N4) para quem já lê; Fundamental (N0) para quem precisa do professor ao lado.</p></div></li>
+        <li><span class="step-n">2</span><div><strong>Informe dados anônimos</strong><p>Faixa etária, escolaridade e região. Nunca pedimos e-mail, CPF ou telefone.</p></div></li>
+        <li><span class="step-n">3</span><div><strong>Responda</strong><p>Sorteamos 1 entre 10 variantes de cada tarefa. Os nomes das competências ficam ocultos até o fim.</p></div></li>
+        <li><span class="step-n">4</span><div><strong>Veja o resultado</strong><p>Score <em>ponderado</em> (cada competência tem um peso), score bruto e desempenho por competência.</p></div></li>
+      </ol>
+
+      <div class="callout">
+        <strong>Atenção:</strong> o Arvorecer é uma ferramenta educativa de triagem. O resultado descreve o desempenho nas tarefas
+        propostas e <strong>não substitui avaliação pedagógica ou clínica</strong> nem os indicadores oficiais (como o INAF).
+      </div>
+
+    </section>
+
+    <!-- ===================== 5. COMPETÊNCIAS E PESOS ===================== -->
+    <section class="container section" id="competencias">
+      <h2 class="section-title">Competências analisadas e seus pesos</h2>
+
+      <!-- Um único botão: mostra/oculta a tabela única (N0 a N4, tudo mesclado).
+           O desenho da tabela fica em app.js (renderCompetencyTable). -->
+      <div class="level-tabs">
+        <button type="button" class="chip" id="btnToggleComp" aria-expanded="false" aria-controls="competencyGrid">Exibir competências</button>
+      </div>
+      <div class="comp-table-wrap hidden" id="competencyGrid"></div>
+    </section>
+
+    <!-- ===================== 6. PREPARAÇÃO (FORMULÁRIOS) ===================== -->
+    <section class="container section" id="comecar">
+      <div class="panel setup">
+        <div class="tabs" role="tablist">
+          <button class="tab is-on" id="tabAutonomo" type="button" role="tab" aria-selected="true" data-mode="autonomo">📖 Teste de Interpretação</button>
+          <button class="tab" id="tabMediado" type="button" role="tab" aria-selected="false" data-mode="mediado">🧑‍🏫 Teste Fundamental</button>
+        </div>
+
+        <!-- ---- Formulário: teste de interpretação ---- -->
+        <form id="formAutonomo" class="setup-form">
+          <h2>Dados anônimos e consentimento</h2>
+          <p class="muted">Informe apenas faixa etária, escolaridade, região e como chegou ao teste.
+             Não coletamos nome, e-mail, CPF ou telefone.</p>
+          <div class="form-grid">
+            <label>Faixa etária
+              <select id="ageRange" required>
+                <option value="">Selecione</option>
+                <option value="15-17">15 a 17 anos</option><option value="18-24">18 a 24 anos</option>
+                <option value="25-34">25 a 34 anos</option><option value="35-49">35 a 49 anos</option>
+                <option value="50-64">50 a 64 anos</option><option value="65+">65 anos ou mais</option>
+              </select>
+            </label>
+            <label>Escolaridade
+              <select id="education" required>
+                <option value="">Selecione</option>
+                <option value="sem_escolaridade">Sem escolaridade formal</option>
+                <option value="fundamental_incompleto">Fundamental incompleto</option><option value="fundamental_completo">Fundamental completo</option>
+                <option value="medio_incompleto">Médio incompleto</option><option value="medio_completo">Médio completo</option>
+                <option value="superior_incompleto">Superior incompleto</option><option value="superior_completo">Superior completo</option>
+                <option value="pos_graduacao">Pós-graduação</option>
+              </select>
+            </label>
+            <label>Região do Brasil
+              <select id="region" required>
+                <option value="">Selecione</option>
+                <option value="Norte">Norte</option><option value="Nordeste">Nordeste</option>
+                <option value="Centro-Oeste">Centro-Oeste</option><option value="Sudeste">Sudeste</option><option value="Sul">Sul</option>
+              </select>
+            </label>
+            <label>Como você chegou a este teste?
+              <select id="arrivalSource" required>
+                <option value="">Selecione</option>
+                <option value="twitter_x">Twitter/X</option><option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option><option value="outro">Outro</option>
+              </select>
+            </label>
+            <label>Tamanho do teste
+              <select id="testLength" required>
+                <option value="30" selected>30 questões — mais rápido</option>
+                <option value="50">50 questões — mais completo</option>
+              </select>
+            </label>
+          </div>
+          <label class="consent">
+            <input type="checkbox" id="consent" required>
+            <span>Aceito que minhas respostas, faixa etária, escolaridade, região, forma de chegada ao teste e pontuação sejam
+            armazenadas de forma anônima para fins acadêmicos e de análise agregada.</span>
+          </label>
+          <div class="form-foot">
+            <span class="muted small">Depois do consentimento, o teste começa.</span>
+            <button class="btn btn-primary" type="button" id="startAutonomo">Iniciar teste →</button>
+          </div>
+        </form>
+
+        <!-- ---- Formulário: modo professor ---- -->
+        <form id="formMediado" class="setup-form hidden">
+          <h2>Avaliação mediada por professor</h2>
+          <p class="muted">O aluno vê a tela; você lê os enunciados, registra respostas orais e acrescenta observações.</p>
+          <div class="form-grid">
+            <label>Nome do Aluno
+              <input type="text" id="studentCode" maxlength="60" placeholder="ex: José" autocomplete="off">
+            </label>
+            <label>Código ou nome do Professor <span class="opt">(opcional — use o código da sua conta do painel, ex.: maria-4821, para o teste aparecer no seu painel)</span>
+              <input type="text" id="teacherCode" maxlength="60" placeholder="ex: maria-4821" autocomplete="off">
+            </label>
+            <label>Faixa etária do aluno
+              <select id="m_ageRange" required>
+                <option value="">Selecione</option>
+                <option value="6-9">6 a 9 anos</option><option value="10-14">10 a 14 anos</option>
+                <option value="15-17">15 a 17 anos</option><option value="18-24">18 a 24 anos</option>
+                <option value="25-34">25 a 34 anos</option><option value="35-49">35 a 49 anos</option>
+                <option value="50-64">50 a 64 anos</option><option value="65+">65 anos ou mais</option>
+              </select>
+            </label>
+            <label>Escolaridade do aluno
+              <select id="m_education" required>
+                <option value="">Selecione</option>
+                <option value="sem_escolaridade">Sem escolaridade formal</option>
+                <option value="fundamental_incompleto">Fundamental incompleto</option><option value="fundamental_completo">Fundamental completo</option>
+                <option value="medio_incompleto">Médio incompleto</option><option value="medio_completo">Médio completo</option>
+                <option value="superior_incompleto">Superior incompleto</option><option value="superior_completo">Superior completo</option>
+                <option value="pos_graduacao">Pós-graduação</option>
+              </select>
+            </label>
+            <label>Região do Brasil
+              <select id="m_region" required>
+                <option value="">Selecione</option>
+                <option value="Norte">Norte</option><option value="Nordeste">Nordeste</option>
+                <option value="Centro-Oeste">Centro-Oeste</option><option value="Sudeste">Sudeste</option><option value="Sul">Sul</option>
+              </select>
+            </label>
+          </div>
+          <label class="consent">
+            <input type="checkbox" id="m_consent" required>
+            <span>Declaro que tenho autorização do aluno (ou do responsável, se menor de idade) para registrar este
+            desempenho de forma anônima, para fins pedagógicos e de análise agregada.</span>
+          </label>
+          <div class="form-foot">
+            <span class="muted small">Tenha papel e lápis à mão para os itens de escrita.</span>
+            <button class="btn btn-accent" type="button" id="startMediado">Iniciar avaliação →</button>
+          </div>
+        </form>
+
+        <!-- Campo-armadilha: invisível para pessoas, preenchido por robôs -->
+        <input type="text" id="website" class="honeypot" autocomplete="off" tabindex="-1" aria-hidden="true">
+      </div>
+    </section>
+
+    <!-- ===================== 7. TESTE DE INTERPRETAÇÃO ===================== -->
+    <section class="container section hidden" id="quiz">
+      <div class="panel">
+        <h2>Teste de Interpretação — N1 a N4</h2>
+        <p id="quizModeInfo" class="muted">Escolha uma alternativa por questão. As contas foram pensadas para serem feitas de cabeça; não use calculadora.</p>
+        <form id="quizForm"></form>
+      </div>
+      <!-- Barra de ações fixa na base da tela: recomeçar à esquerda, resultado à direita -->
+      <div class="actionbar" id="quizBar">
+        <button class="btn btn-ghost" type="button" id="btnRestartQuiz">↺ Recomeçar</button>
+        <span class="actionbar-count" id="quizCount">0/30</span>
+        <button class="btn btn-primary" type="button" id="btnFinishQuiz">Ver meu resultado →</button>
+      </div>
+    </section>
+
+    <!-- ===================== 8. TESTE FUNDAMENTAL ===================== -->
+    <section class="container section hidden" id="guided">
+      <div class="guided-head">
+        <div>
+          <span class="eyebrow" id="gCompetency">Competência</span>
+          <h2 id="gTitle">Item 1 de 30</h2>
+        </div>
+        <button class="btn btn-ghost btn-sm" type="button" id="gEnd">Encerrar avaliação</button>
+      </div>
+
+      <div class="guided-body">
+        <!-- Palco: o que o ALUNO vê -->
+        <div class="stage" id="gStage" aria-live="polite"></div>
+
+        <!-- Painel do professor: o que só o PROFESSOR precisa -->
+        <aside class="teacher-panel" aria-label="Painel do professor">
+          <h3>🧑‍🏫 Painel do professor</h3>
+          <div id="gSay" class="tp-block"></div>
+          <div id="gHint" class="tp-block"></div>
+          <div id="gOral" class="tp-block hidden">
+            <strong>Registre o desempenho:</strong>
+            <div class="oral-buttons">
+              <button type="button" class="oral oral-ok" data-oral="ok">✓ Acertou</button>
+              <button type="button" class="oral oral-mid" data-oral="parcial">◐ Parcial</button>
+              <button type="button" class="oral oral-no" data-oral="nao">✗ Não acertou</button>
+            </div>
+          </div>
+          <label class="tp-block">Observações da avaliação
+            <textarea id="gNotes" maxlength="1500" placeholder="Ex.: troca b/d, lê silabando, precisou de pausa…"></textarea>
+          </label>
+        </aside>
+      </div>
+
+      <!-- Navegação entre itens: anterior à esquerda, próximo à direita -->
+      <div class="actionbar guided-nav">
+        <button class="btn btn-ghost" type="button" id="gPrev">← Anterior</button>
+        <div class="dots" id="gDots" aria-hidden="true"></div>
+        <button class="btn btn-primary" type="button" id="gNext">Próximo →</button>
+      </div>
+    </section>
+
+    <!-- ===================== 9. RESULTADO ===================== -->
+    <section class="container section result hidden" id="result" aria-live="polite">
+      <div class="result-top">
+        <div class="ring" id="scoreRing" style="--angle: 0deg;">
+          <div class="ring-text"><strong id="scoreValue">0</strong><span>de 100</span></div>
+        </div>
+        <div class="result-copy">
+          <h2 id="resultTitle">Seu resultado</h2>
+          <p id="resultDescription"></p>
+          <p id="saveStatus" class="save-status"></p>
+          <button class="btn btn-ghost btn-sm hidden" type="button" id="btnRetrySave">↻ Tentar salvar de novo</button>
+        </div>
+      </div>
+
+      <div class="kpis" id="resultKpis"></div>
+
+      <div class="card hidden" id="notesCard"><h3>Observações do professor</h3><p id="resultNotes"></p></div>
+      <div class="card hidden" id="nextCard"></div>
+
+      <div class="card">
+        <h3>Desempenho por competência</h3>
+        <p class="muted small">A etiqueta “peso” indica quanto cada competência vale no score ponderado.</p>
+        <div class="comp-bars" id="breakdown"></div>
+      </div>
+
+      <div class="card hidden" id="inafCard"></div>
+
+      <div class="card" id="shareCard">
+        <h3>Texto para print ou post</h3>
+        <textarea id="shareText" readonly></textarea>
+      </div>
+
+      <!-- Ações do resultado: novo teste à esquerda, imprimir/copiar à direita -->
+      <div class="result-actions">
+        <button class="btn btn-ghost" type="button" id="btnNewTest">↺ Fazer outra avaliação</button>
+        <div class="result-actions-end">
+          <button class="btn btn-ghost" type="button" id="btnCopy">Copiar texto</button>
+          <button class="btn btn-primary" type="button" id="btnPrint">Imprimir / salvar PDF</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <span>🌱 Arvorecer · ferramenta educativa de triagem · dados armazenados de forma anônima</span>
+  </footer>
+</body>
+</html>

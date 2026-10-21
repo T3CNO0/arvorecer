@@ -1,0 +1,18 @@
+{
+  "name": "arvorecer",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Arvorecer — diagnóstico de alfabetismo (Teste Fundamental N0 e Teste de Interpretação N1–N4) para Vercel",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build:data": "python3 tools/build_data.py",
+    "dev": "node tools/dev-server.js",
+    "test": "node tests/run.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.2.17"
+  }
+}

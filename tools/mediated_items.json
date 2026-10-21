@@ -1,0 +1,864 @@
+{
+ "_comentario": "Fonte única dos itens do TESTE FUNDAMENTAL (N0). O script build_data.py gera a partir deste arquivo: assets/mediated.js (sem gabarito, vai ao navegador) e answer_key.php (com gabarito, fica no servidor). NÃO edite assets/mediated.js à mão: ele é sobrescrito. Campos: id; c = competência N0 da planilha (N0C1…N0C8, define o PESO em config.php); d = rótulo curto mostrado ao professor; type = choice (aluno toca na alternativa) | oral (professor registra) | build (aluno monta a frase); show = estímulo na tela (letter, word, image, sentence, none); hint = só para o professor. Para usar fotos próprias, troque o emoji por um caminho, ex.: assets/img/gato.png.",
+ "items": [
+  {
+   "id": "f01",
+   "c": "N0C7",
+   "d": "Escrita de números",
+   "type": "oral",
+   "show": {
+    "kind": "none"
+   },
+   "prompt": "Escreva o número que eu vou ditar: 7.",
+   "say": "Dite devagar: “sete”.",
+   "hint": "Entregue papel e lápis. Acerto: escreveu 7. Parcial: escreveu espelhado/invertido ou só depois de uma dica.",
+   "rubric": "Escreveu o número 7 ao ditado"
+  },
+  {
+   "id": "f02",
+   "c": "N0C7",
+   "d": "Escrita de números",
+   "type": "oral",
+   "show": {
+    "kind": "none"
+   },
+   "prompt": "Escreva o número que eu vou ditar: 25.",
+   "say": "Dite devagar: “vinte e cinco”.",
+   "hint": "Acerto: 25, com os algarismos na ordem certa. Parcial: 52 (inverteu) ou 205 (escreveu “vinte” e “cinco” separados).",
+   "rubric": "Escreveu o número 25 ao ditado"
+  },
+  {
+   "id": "f03",
+   "c": "N0C7",
+   "d": "Soma de unidades",
+   "type": "choice",
+   "show": {
+    "kind": "sentence",
+    "value": "4 + 3 = ?"
+   },
+   "prompt": "Quanto é quatro mais três?",
+   "say": "Se precisar, leia: “quatro mais três é igual a quanto?”.",
+   "hint": "Soma de unidades. Se o aluno contar nos dedos, vale como acerto; anote a estratégia nas observações.",
+   "options": [
+    {
+     "id": "a",
+     "text": "6"
+    },
+    {
+     "id": "b",
+     "text": "7"
+    },
+    {
+     "id": "c",
+     "text": "8"
+    },
+    {
+     "id": "d",
+     "text": "12"
+    }
+   ],
+   "answer": "b"
+  },
+  {
+   "id": "f04",
+   "c": "N0C7",
+   "d": "Soma de dezenas",
+   "type": "choice",
+   "show": {
+    "kind": "sentence",
+    "value": "20 + 30 = ?"
+   },
+   "prompt": "Quanto é vinte mais trinta?",
+   "say": "Leia: “vinte mais trinta é igual a quanto?”.",
+   "hint": "Soma de dezenas. A alternativa 5 mostra quem somou só os algarismos (2+3); a 230, quem juntou os números.",
+   "options": [
+    {
+     "id": "a",
+     "text": "5"
+    },
+    {
+     "id": "b",
+     "text": "230"
+    },
+    {
+     "id": "c",
+     "text": "50"
+    },
+    {
+     "id": "d",
+     "text": "60"
+    }
+   ],
+   "answer": "c"
+  },
+  {
+   "id": "f05",
+   "d": "Reconhecimento de letras",
+   "type": "oral",
+   "show": {
+    "kind": "letter",
+    "value": "A"
+   },
+   "prompt": "Que letra é esta?",
+   "hint": "Registre como acerto se o aluno disser o nome da letra (ou o som). Parcial: acertou após uma dica.",
+   "rubric": "Nomeou a letra A",
+   "c": "N0C1"
+  },
+  {
+   "id": "f06",
+   "d": "Reconhecimento de letras",
+   "type": "oral",
+   "show": {
+    "kind": "letter",
+    "value": "M"
+   },
+   "prompt": "Que letra é esta?",
+   "hint": "Mesma regra do item anterior.",
+   "rubric": "Nomeou a letra M",
+   "c": "N0C1"
+  },
+  {
+   "id": "f07",
+   "d": "Reconhecimento de letras",
+   "type": "choice",
+   "show": {
+    "kind": "none"
+   },
+   "prompt": "Toque na letra B.",
+   "say": "Diga em voz alta: “Toque na letra B”.",
+   "hint": "Leia o enunciado em voz alta; o aluno toca na resposta.",
+   "options": [
+    {
+     "id": "a",
+     "text": "B"
+    },
+    {
+     "id": "b",
+     "text": "D"
+    },
+    {
+     "id": "c",
+     "text": "P"
+    },
+    {
+     "id": "d",
+     "text": "R"
+    }
+   ],
+   "answer": "a",
+   "c": "N0C1"
+  },
+  {
+   "id": "f08",
+   "d": "Reconhecimento de letras",
+   "type": "choice",
+   "show": {
+    "kind": "none"
+   },
+   "prompt": "Toque na letra M.",
+   "say": "Diga em voz alta: “Toque na letra M”.",
+   "hint": "Leia o enunciado em voz alta.",
+   "options": [
+    {
+     "id": "a",
+     "text": "N"
+    },
+    {
+     "id": "b",
+     "text": "M"
+    },
+    {
+     "id": "c",
+     "text": "W"
+    },
+    {
+     "id": "d",
+     "text": "H"
+    }
+   ],
+   "answer": "b",
+   "c": "N0C1"
+  },
+  {
+   "id": "f09",
+   "d": "Reconhecimento de letras",
+   "type": "choice",
+   "show": {
+    "kind": "none"
+   },
+   "prompt": "Toque na letra minúscula g.",
+   "say": "Diga em voz alta: “Toque na letra g minúscula”.",
+   "hint": "Letras minúsculas parecidas (g, q, p, y) revelam confusões comuns.",
+   "options": [
+    {
+     "id": "a",
+     "text": "q"
+    },
+    {
+     "id": "b",
+     "text": "p"
+    },
+    {
+     "id": "c",
+     "text": "g"
+    },
+    {
+     "id": "d",
+     "text": "y"
+    }
+   ],
+   "answer": "c",
+   "c": "N0C1"
+  },
+  {
+   "id": "f10",
+   "d": "Reconhecimento de letras",
+   "type": "choice",
+   "show": {
+    "kind": "letter",
+    "value": "E"
+   },
+   "prompt": "Qual letra minúscula combina com esta letra maiúscula?",
+   "say": "Aponte para a letra grande e pergunte qual é a “irmã” dela.",
+   "hint": "Correspondência maiúscula/minúscula.",
+   "options": [
+    {
+     "id": "a",
+     "text": "c"
+    },
+    {
+     "id": "b",
+     "text": "o"
+    },
+    {
+     "id": "c",
+     "text": "e"
+    },
+    {
+     "id": "d",
+     "text": "a"
+    }
+   ],
+   "answer": "c",
+   "c": "N0C1"
+  },
+  {
+   "id": "f11",
+   "d": "Consciência fonológica (som inicial)",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🍌"
+   },
+   "prompt": "Com que letra começa o nome desta figura?",
+   "hint": "Nome da figura: banana. Diga o nome em voz alta antes de perguntar.",
+   "options": [
+    {
+     "id": "a",
+     "text": "N"
+    },
+    {
+     "id": "b",
+     "text": "M"
+    },
+    {
+     "id": "c",
+     "text": "B"
+    },
+    {
+     "id": "d",
+     "text": "P"
+    }
+   ],
+   "answer": "c",
+   "c": "N0C2"
+  },
+  {
+   "id": "f12",
+   "d": "Consciência fonológica (som inicial)",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "☀️"
+   },
+   "prompt": "Com que letra começa o nome desta figura?",
+   "hint": "Nome da figura: sol.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Z"
+    },
+    {
+     "id": "b",
+     "text": "S"
+    },
+    {
+     "id": "c",
+     "text": "C"
+    },
+    {
+     "id": "d",
+     "text": "X"
+    }
+   ],
+   "answer": "b",
+   "c": "N0C2"
+  },
+  {
+   "id": "f13",
+   "d": "Consciência fonológica (som inicial)",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🐱"
+   },
+   "prompt": "Com que letra começa o nome desta figura?",
+   "hint": "Nome da figura: gato.",
+   "options": [
+    {
+     "id": "a",
+     "text": "C"
+    },
+    {
+     "id": "b",
+     "text": "J"
+    },
+    {
+     "id": "c",
+     "text": "K"
+    },
+    {
+     "id": "d",
+     "text": "G"
+    }
+   ],
+   "answer": "d",
+   "c": "N0C2"
+  },
+  {
+   "id": "f14",
+   "d": "Consciência fonológica (som inicial)",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🌙"
+   },
+   "prompt": "Com que letra começa o nome desta figura?",
+   "hint": "Nome da figura: lua.",
+   "options": [
+    {
+     "id": "a",
+     "text": "L"
+    },
+    {
+     "id": "b",
+     "text": "R"
+    },
+    {
+     "id": "c",
+     "text": "N"
+    },
+    {
+     "id": "d",
+     "text": "U"
+    }
+   ],
+   "answer": "a",
+   "c": "N0C2"
+  },
+  {
+   "id": "f15",
+   "d": "Consciência fonológica (som inicial)",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🐟"
+   },
+   "prompt": "Com que letra começa o nome desta figura?",
+   "hint": "Nome da figura: peixe.",
+   "options": [
+    {
+     "id": "a",
+     "text": "B"
+    },
+    {
+     "id": "b",
+     "text": "F"
+    },
+    {
+     "id": "c",
+     "text": "P"
+    },
+    {
+     "id": "d",
+     "text": "X"
+    }
+   ],
+   "answer": "c",
+   "c": "N0C2"
+  },
+  {
+   "id": "f16",
+   "d": "Consciência fonológica (som inicial)",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🏠"
+   },
+   "prompt": "Com que letra começa o nome desta figura?",
+   "hint": "Nome da figura: casa.",
+   "options": [
+    {
+     "id": "a",
+     "text": "S"
+    },
+    {
+     "id": "b",
+     "text": "C"
+    },
+    {
+     "id": "c",
+     "text": "Z"
+    },
+    {
+     "id": "d",
+     "text": "K"
+    }
+   ],
+   "answer": "b",
+   "c": "N0C2"
+  },
+  {
+   "id": "f17",
+   "d": "Leitura de palavras",
+   "type": "choice",
+   "show": {
+    "kind": "word",
+    "value": "BOLA"
+   },
+   "prompt": "Leia a palavra e toque na figura que combina.",
+   "hint": "Não leia a palavra para o aluno.",
+   "options": [
+    {
+     "id": "a",
+     "text": "🐟"
+    },
+    {
+     "id": "b",
+     "text": "🏠"
+    },
+    {
+     "id": "c",
+     "text": "⚽"
+    },
+    {
+     "id": "d",
+     "text": "🌳"
+    }
+   ],
+   "answer": "c",
+   "c": "N0C4"
+  },
+  {
+   "id": "f18",
+   "d": "Leitura de palavras",
+   "type": "choice",
+   "show": {
+    "kind": "word",
+    "value": "CASA"
+   },
+   "prompt": "Leia a palavra e toque na figura que combina.",
+   "hint": "Não leia a palavra para o aluno.",
+   "options": [
+    {
+     "id": "a",
+     "text": "🏠"
+    },
+    {
+     "id": "b",
+     "text": "🐱"
+    },
+    {
+     "id": "c",
+     "text": "🌙"
+    },
+    {
+     "id": "d",
+     "text": "🍌"
+    }
+   ],
+   "answer": "a",
+   "c": "N0C4"
+  },
+  {
+   "id": "f19",
+   "d": "Leitura de palavras",
+   "type": "oral",
+   "show": {
+    "kind": "word",
+    "value": "gato"
+   },
+   "prompt": "Leia esta palavra em voz alta.",
+   "hint": "Acerto: leu a palavra inteira. Parcial: leu silabando ou com ajuda.",
+   "rubric": "Leu a palavra “gato”",
+   "c": "N0C4"
+  },
+  {
+   "id": "f20",
+   "d": "Leitura de palavras",
+   "type": "choice",
+   "show": {
+    "kind": "word",
+    "value": "BANANA"
+   },
+   "prompt": "Leia a palavra e toque na figura que combina.",
+   "hint": "Não leia a palavra para o aluno.",
+   "options": [
+    {
+     "id": "a",
+     "text": "🍌"
+    },
+    {
+     "id": "b",
+     "text": "🐱"
+    },
+    {
+     "id": "c",
+     "text": "🌙"
+    },
+    {
+     "id": "d",
+     "text": "🏠"
+    }
+   ],
+   "answer": "a",
+   "c": "N0C4"
+  },
+  {
+   "id": "f21",
+   "d": "Formação de sílabas e palavras",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🐱",
+    "word": "GA _ _"
+   },
+   "prompt": "Qual sílaba completa a palavra?",
+   "hint": "Palavra: gato (GA-TO).",
+   "options": [
+    {
+     "id": "a",
+     "text": "TA"
+    },
+    {
+     "id": "b",
+     "text": "DO"
+    },
+    {
+     "id": "c",
+     "text": "PO"
+    },
+    {
+     "id": "d",
+     "text": "TO"
+    }
+   ],
+   "answer": "d",
+   "c": "N0C3"
+  },
+  {
+   "id": "f22",
+   "d": "Formação de sílabas e palavras",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🏠",
+    "word": "CA _ _"
+   },
+   "prompt": "Qual sílaba completa a palavra?",
+   "hint": "Palavra: casa (CA-SA).",
+   "options": [
+    {
+     "id": "a",
+     "text": "ZA"
+    },
+    {
+     "id": "b",
+     "text": "SA"
+    },
+    {
+     "id": "c",
+     "text": "XA"
+    },
+    {
+     "id": "d",
+     "text": "CO"
+    }
+   ],
+   "answer": "b",
+   "c": "N0C3"
+  },
+  {
+   "id": "f23",
+   "d": "Formação de sílabas e palavras",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🍌",
+    "word": "BA _ _NA"
+   },
+   "prompt": "Qual sílaba completa a palavra?",
+   "hint": "Palavra: banana (BA-NA-NA).",
+   "options": [
+    {
+     "id": "a",
+     "text": "MA"
+    },
+    {
+     "id": "b",
+     "text": "LA"
+    },
+    {
+     "id": "c",
+     "text": "NA"
+    },
+    {
+     "id": "d",
+     "text": "TA"
+    }
+   ],
+   "answer": "c",
+   "c": "N0C3"
+  },
+  {
+   "id": "f24",
+   "d": "Formação de sílabas e palavras",
+   "type": "choice",
+   "show": {
+    "kind": "image",
+    "value": "🍇",
+    "word": "U _ _"
+   },
+   "prompt": "Qual sílaba completa a palavra?",
+   "hint": "Palavra: uva (U-VA).",
+   "options": [
+    {
+     "id": "a",
+     "text": "VA"
+    },
+    {
+     "id": "b",
+     "text": "FA"
+    },
+    {
+     "id": "c",
+     "text": "BA"
+    },
+    {
+     "id": "d",
+     "text": "PA"
+    }
+   ],
+   "answer": "a",
+   "c": "N0C3"
+  },
+  {
+   "id": "f25",
+   "d": "Escrita (cópia e ditado)",
+   "type": "oral",
+   "show": {
+    "kind": "word",
+    "value": "BOLA"
+   },
+   "prompt": "Copie esta palavra no papel.",
+   "hint": "Entregue papel e lápis. Acerto: copiou todas as letras na ordem. Parcial: trocou ou omitiu letras.",
+   "rubric": "Copiou a palavra “BOLA”",
+   "c": "N0C6"
+  },
+  {
+   "id": "f26",
+   "d": "Escrita (cópia e ditado)",
+   "type": "oral",
+   "show": {
+    "kind": "none"
+   },
+   "prompt": "Escreva a palavra que eu vou ditar: CASA.",
+   "say": "Dite devagar: “CA-SA”.",
+   "hint": "Acerto: escreveu CASA (aceite letra de forma ou cursiva). Parcial: escrita compreensível com 1 troca.",
+   "rubric": "Escreveu “casa” ao ditado",
+   "c": "N0C5"
+  },
+  {
+   "id": "f27",
+   "d": "Leitura de frases",
+   "type": "choice",
+   "show": {
+    "kind": "sentence",
+    "value": "O gato bebe leite."
+   },
+   "prompt": "Leia a frase e toque na figura que combina.",
+   "hint": "Não leia a frase para o aluno.",
+   "options": [
+    {
+     "id": "a",
+     "text": "🐱🦴"
+    },
+    {
+     "id": "b",
+     "text": "🐱🥛"
+    },
+    {
+     "id": "c",
+     "text": "👧🥛"
+    },
+    {
+     "id": "d",
+     "text": "☀️🌳"
+    }
+   ],
+   "answer": "b",
+   "c": "N0C4"
+  },
+  {
+   "id": "f28",
+   "d": "Leitura de frases",
+   "type": "choice",
+   "show": {
+    "kind": "sentence",
+    "value": "A menina lê um livro."
+   },
+   "prompt": "Leia a frase e toque na figura que combina.",
+   "hint": "Não leia a frase para o aluno.",
+   "options": [
+    {
+     "id": "a",
+     "text": "👧📖"
+    },
+    {
+     "id": "b",
+     "text": "🐱📖"
+    },
+    {
+     "id": "c",
+     "text": "👧🦴"
+    },
+    {
+     "id": "d",
+     "text": "🚌🏫"
+    }
+   ],
+   "answer": "a",
+   "c": "N0C4"
+  },
+  {
+   "id": "f29",
+   "d": "Leitura de frases",
+   "type": "choice",
+   "show": {
+    "kind": "sentence",
+    "value": "O cachorro come o osso."
+   },
+   "prompt": "Leia a frase e toque na figura que combina.",
+   "hint": "Não leia a frase para o aluno.",
+   "options": [
+    {
+     "id": "a",
+     "text": "🐶📖"
+    },
+    {
+     "id": "b",
+     "text": "🌙⭐"
+    },
+    {
+     "id": "c",
+     "text": "🐶🦴"
+    },
+    {
+     "id": "d",
+     "text": "🐱🦴"
+    }
+   ],
+   "answer": "c",
+   "c": "N0C4"
+  },
+  {
+   "id": "f30",
+   "d": "Formação de frases",
+   "type": "build",
+   "show": {
+    "kind": "image",
+    "value": "🐱💤"
+   },
+   "prompt": "Toque nas palavras na ordem certa para formar uma frase.",
+   "hint": "Frase esperada: “O gato dorme.”",
+   "words": [
+    "O",
+    "gato",
+    "dorme."
+   ],
+   "c": "N0C4"
+  },
+  {
+   "id": "f31",
+   "d": "Formação de frases",
+   "type": "build",
+   "show": {
+    "kind": "image",
+    "value": "⚽"
+   },
+   "prompt": "Toque nas palavras na ordem certa para formar uma frase.",
+   "hint": "Frase esperada: “A bola é grande.”",
+   "words": [
+    "A",
+    "bola",
+    "é",
+    "grande."
+   ],
+   "c": "N0C4"
+  },
+  {
+   "id": "f32",
+   "d": "Formação de frases",
+   "type": "build",
+   "show": {
+    "kind": "image",
+    "value": "👧📖"
+   },
+   "prompt": "Toque nas palavras na ordem certa para formar uma frase.",
+   "hint": "Frase esperada: “Maria lê um livro.”",
+   "words": [
+    "Maria",
+    "lê",
+    "um",
+    "livro."
+   ],
+   "c": "N0C4"
+  },
+  {
+   "id": "f33",
+   "d": "Escrita (cópia e ditado)",
+   "type": "oral",
+   "show": {
+    "kind": "none"
+   },
+   "prompt": "Escreva a frase que eu vou ditar: O gato dorme.",
+   "say": "Dite por partes: “O… gato… dorme”.",
+   "hint": "Acerto: frase completa e legível. Parcial: palavras presentes, mas com trocas ou sem separação.",
+   "rubric": "Escreveu a frase “O gato dorme.” ao ditado",
+   "c": "N0C5"
+  },
+  {
+   "id": "f34",
+   "d": "Leitura de frases",
+   "type": "oral",
+   "show": {
+    "kind": "sentence",
+    "value": "A casa é azul e a bola é amarela."
+   },
+   "prompt": "Leia esta frase em voz alta.",
+   "hint": "Acerto: leu a frase com fluência razoável. Parcial: leu palavra por palavra, com pausas longas ou ajuda.",
+   "rubric": "Leu a frase em voz alta",
+   "c": "N0C4"
+  }
+ ]
+}
